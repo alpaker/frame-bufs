@@ -13,9 +13,9 @@ list of buffers associated with a frame. The package interacts properly with
 Installation
 ============
 
-Put the package file [[frame-bufs.el]] in your load path and put:
+Put the package file in your load path and put:
 
-  (require 'frame-bufs)
+  `(require 'frame-bufs)`
 
 in your `.emacs`.  To enable frame-bufs, use the command
 `frame-bufs-mode`, or put `(frame-bufs-mode t)` in your `.emacs`.
@@ -29,8 +29,8 @@ with a frame if it is selected in one of that frame's windows.  Note, then,
 that a buffer can be associated with more than one frame.  We sometimes speak
 of a buffer that's associated with a frame as "frame-associated," and refer
 to the list of buffers that are associated with a given frame as that frame's
-"associated-buffer list."  (Frame-bufs does not alter the `buffer-list' or
-`buried-buffer-list' frame parameters of any frame; it keeps its own record
+"associated-buffer list."  (Frame-bufs does not alter the `buffer-list` or
+`buried-buffer-list` frame parameters of any frame; it keeps its own record
 of the buffers associated with each frame.)
   
 The buffer menu now has two modes:  it can either list all buffers (we call
@@ -38,14 +38,14 @@ this "full-list mode") or only buffers associated with the selected frame
 ("frame-list mode").  By typing `F` one can toggle between the two modes.  In
 full-list mode there is an additional column after the initial `CRM` bit
 columns: the `F` column.  Buffers associated with the selected frame are
-indicated with an `o' in this column.  In frame-list mode, the fourth column
+indicated with an `o` in this column.  In frame-list mode, the fourth column
 is suppressed.  Here are screenshots of the buffer menu in the two different
 modes:
 
 <table>
 <tr>
 <td>
-![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsLocalMode.png.png)
+![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsLocalMode.png)
 </td>
 </tr>
 
@@ -60,7 +60,7 @@ buffers associated with this frame are shown.
 <table>
 <tr>
 <td>
-![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsFullMode.png.png)
+![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsFullMode.png)
 </td>
 </tr>
 
@@ -118,35 +118,35 @@ following variables:
 
 * If `frame-bufs-new-frames-inherit` is non-nil, then the associated
   buffers of a new frame's "parent"--the frame that was selected when the
-  command creating the new frame is called-- will be associated with the new
+  command creating the new frame is called--will be associated with the new
   frame.  (The default value is nil.)
 
 Other Commands and Features
 ===========================
 
-* If `frame-bufs-use-buffer-predicate` is non-nil, each frame's buffer
-  predicate is set so that `other-buffer` will prefer frame-associated
+Frame-bufs also provides several options and commands that apply everywhere,
+not just in the buffer menu:
+
+* If the variable `frame-bufs-use-buffer-predicate` is non-nil, each frame's
+  buffer predicate is set so that `other-buffer` will prefer frame-associated
   buffers.  Thus, when a buffer is removed from a window and automatically
   replaced with another (as happens, say, when one kills a buffer), the newly
   displayed buffer will, if possible, be one associated with that
   frame.  (The default value is t.)
 
-Frame-bufs also provides three other commands that are available everywhere,
-not just in the buffer menu:
+* The command `frame-bufs-dismiss-buffer` is somewhat analogous to
+  `bury-buffer`.  It removes a buffer from a frame's associated-buffer list,
+  and if that buffer is displayed in any windows on the frame, it is replaced
+  by another buffer.  When called with no arguments, it acts on the current
+  buffer and selected frame.
 
-* `frame-bufs-dismiss-buffer` is somewhat analogous to `bury-buffer`.  It
-   removes a buffer from a frame's associated-buffer list, and if that buffer
-   is displayed in any windows on the frame, it is replaced by another
-   buffer.  When called with no arguments, it acts on the current buffer and
-   selected frame.
+* The command `frame-bufs-reset-frame` resets a frame's associated-buffer
+  list.  Specifically, it sets the associated-buffer list to the list of
+  buffers that have been selected on the frame.  When called with no
+  argument, it acts on the current frame.
 
-* `frame-bufs-reset-frame` resets a frame's associated-buffer
-   list.  Specifically, it sets the associated-buffer list to the list of
-   buffers that have been selected on the frame.  When called with no
-   argument, it acts on the current frame.
-
-* `frame-bufs-reset-all-frames` resets the associated-buffer list of all
-   frames.
+* The command `frame-bufs-reset-all-frames` resets the associated-buffer list
+  of all frames.
 
 Compatibility and Other Considerations
 ======================================
@@ -159,8 +159,8 @@ A Note on v24
 -------------
 
 The buffer display routines in v24 are currently being rewritten in
-preparation for the release of v24.1. As they've been changing on a near
-daily basis, I'm not going to try to keep up with them until the relevant
-code stabilizes (which is supposed to happen by August, 2011).  Until then,
-users who build v24 from source using a recent rev (where "recent" means
-after April, 2011) might see irregular behavior.
+preparation for the release of v24.1. As they've been changing on a
+near-daily basis, I'm not going to try to keep up with them until the
+relevant code stabilizes (which is supposed to happen by August,
+2011).  Until then, users who build v24 from source using a recent rev (where
+"recent" means after April, 2011) might see irregular behavior.
