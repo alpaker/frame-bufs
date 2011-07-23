@@ -46,17 +46,13 @@ modes:
 
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsLocalMode.png)
 
-<i>Buffer menu in frame-list mode, sorted by buffer size.</i> 
-
-<i>Only buffers associated with this frame are shown.</i>
+<i>Buffer menu in frame-list mode, sorted by buffer size.  Only buffers associated with this frame are shown.</i>
 
 #### Full-List Mode
 
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsFullMode.png)
 
-<i>Buffer menu in full-list mode, sorted by buffer size.</i>
-
-<i>All buffers are shown; the buffers associated with this frame are
+<i>Buffer menu in full-list mode, sorted by buffer size. All buffers are shown; the buffers associated with this frame are
 distinguished by an `o` bit in the fourth `F` column.</i>
 
 When first called up, the buffer menu appears in full-list mode.  In
