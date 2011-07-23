@@ -43,10 +43,12 @@ is suppressed.  Here are screenshots of the buffer menu in the two different
 modes:
 
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsLocalMode.png)
+
 Buffer menu in frame-list mode, sorted by buffer size.  Only buffers
 associated with this frame are shown.
 
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsFullMode.png)
+
 Buffer menu in full-list mode, sorted by buffer size.  All buffers are shown;
 the buffers associated with this frame are distinguished by an `o' bit in the
 fourth `F` column.
