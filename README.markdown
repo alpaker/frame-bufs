@@ -42,34 +42,14 @@ indicated with an `o` in this column.  In frame-list mode, the fourth column
 is suppressed.  Here are screenshots of the buffer menu in the two different
 modes:
 
-<table>
-<tr>
-<td>
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsLocalMode.png)
-</td>
-</tr>
+Buffer menu in frame-list mode, sorted by buffer size.  Only buffers
+associated with this frame are shown.
 
-<tr> 
-<td> Buffer menu in frame-list mode, sorted by buffer size.  Only
-buffers associated with this frame are shown.
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td>
 ![screenshot](https://github.com/alpaker/Frame-Bufs/raw/master/FrameBufsFullMode.png)
-</td>
-</tr>
-
-<tr> 
-<td>
- Buffer menu in full-list mode, sorted by buffer size.  All buffers are shown; the buffers associated with this frame are distinguished by an `o' bit in the fourth `F` column.
-</td>
-</tr>
-</table>
+Buffer menu in full-list mode, sorted by buffer size.  All buffers are shown;
+the buffers associated with this frame are distinguished by an `o' bit in the
+fourth `F` column.
 
 When first called up, the buffer menu appears in full-list mode.  In
 subsequent calls it opens in whatever mode it was last in.
