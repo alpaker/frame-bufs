@@ -1,4 +1,4 @@
-It extends Emacs’s buffer menu so that it understands a distinction between
+`frame-bufs` extends Emacs’s buffer menu so that it understands a distinction between
 those buffers that "belong" to a frame and those that do not. The buffer menu
 can be toggled between listing all buffers and listing only those buffers
 associated with the selected frame. The criteria governing which buffers are
@@ -11,8 +11,7 @@ buffer ordering made by `bury-buffer`. It does not alter the `buffer-list` or
 `buried-buffer-list` frame parameters.  It is not compatible with non-`nil`
 values of `pop-up-frames`.
 
-Installation
-============
+### Installation
 
 Put the package file in your load path and put:
 
@@ -21,8 +20,7 @@ Put the package file in your load path and put:
 in your `.emacs`.  To enable frame-bufs, use the command
 `frame-bufs-mode`, or put `(frame-bufs-mode t)` in your `.emacs`.
 
-Features Overview
-=================
+### Features Overview
 
 When frame-bufs-mode is enabled, it keeps a record of which buffers are
 associated with each frame.  In the typical case, a buffer becomes associated
@@ -66,8 +64,7 @@ commands available in the buffer menu:
 As with saving and killing buffers from the buffer menu, these requested
 changes are effected by calling `Buffer-menu-execute`.
 
-Further Control of the Local Buffer List
-========================================
+### Further Control of the Local Buffer List
 
 As mentioned above, a buffer automatically becomes associated with a frame if
 it is selected in one of that frame's windows.  Finer-grained control over
@@ -97,8 +94,7 @@ following variables:
   command creating the new frame is called--will be associated with the new
   frame.  (The default value is `nil`.)
 
-Other Commands and Features
-===========================
+### Other Commands and Features
 
 * If the variable `frame-bufs-use-buffer-predicate` is non-`nil`, each frame's
   buffer predicate is set so that `other-buffer` will prefer frame-associated
