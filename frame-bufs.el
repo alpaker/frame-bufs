@@ -3,7 +3,7 @@
 ;; Copyright (c) 2011-2013 Alp Aker
 
 ;; Author: Alp Aker <alp.tekin.aker@gmail.com>
-;; Version: 1.99
+;; Version: 2.02
 ;; Keywords: convenience, buffers
 
 ;; This program is free software; you can redistribute it and/or
@@ -51,15 +51,15 @@
 ;; Usage
 ;; =====
 
-;; Frame-bufs operates fairly transparently.  The buffer menu now has two
-;; modes:  In global mode, it lists all buffers; in local mode it
-;; lists only those buffers that are associated with the selected frame.  One
-;; can toggle between the modes by typing "F".
+;; When frame-bufs-mode is enabled, the buffer menu has two modes: In global
+;; mode, it lists all buffers; in local mode it lists only those buffers that
+;; are associated with the selected frame.  One can toggle between the modes
+;; by typing "F".
 
 ;; In global mode, there is a new fourth column after the initial CRM
 ;; columns--the `F' column.  Buffers associated with the selected frame are
 ;; indicated with an `o' in this column.  In local mode, the fourth `F'
-;; column is suppressed.  (Glbal/local status is also indicated in the mode
+;; column is suppressed.  (Global/local status is also indicated in the mode
 ;; line.)
 
 ;; The typical way a buffer becomes associated with a frame is by being
@@ -71,7 +71,7 @@
 ;; severed.  As with other actions in the buffer menu, these changes take
 ;; effect when `Buffer-menu-execute' is called.
 
-;; When first called, the buffer menu open in global mode.  In subsequent
+;; When first called, the buffer menu opens in global mode.  In subsequent
 ;; calls it opens in whatever mode it was last in.
 
 ;; Criteria That Control Buffer-Frame Association
@@ -207,10 +207,11 @@
   :type 'hook)
 
 (defcustom frame-bufs-use-buffer-predicate t
-  "If non-nil, frame-bufs adjusts the buffer-predicate frame parameter of every frame.
-Specifically, frame-bufs sets the buffer predicate of each frame
+  "Make `other-buffer' prefer associated buffers.
+If non-nil, frame-bufs sets the buffer predicate of each frame
 so that `other-buffer' will prefer buffers associated with that
-frame.  If nil, `other-buffer' does not prefer frame-associated buffers.
+frame.  If nil, `other-buffer' does not prefer frame-associated
+buffers.
 
 Changes to this variable do not take effect until the
 mode-function `frame-bufs-mode' is run."
@@ -218,8 +219,7 @@ mode-function `frame-bufs-mode' is run."
   :type 'boolean)
 
 (defcustom frame-bufs-always-include-names '("*scratch*" "*notes*")
-  "If a buffer's name is in this list, that buffer is associated with every frame.
-The value of the variable should be a list of strings."
+  "Buffers whose names are in this list are associated with every frame."
   :group 'frame-bufs
   :type '(repeat string))
 
@@ -235,7 +235,7 @@ selected on that frame, not merely displayed."
 If non-nil, and the command that creates a new frame also creates
 new buffers, those buffers will be associated with the new frame,
 even if they have not been selected.  (Buffers created before the
-new frame is created are not affected by this variable.)"
+new frame is created are not thus captured.)"
   :group 'frame-bufs
   :type 'boolean)
 
@@ -262,6 +262,7 @@ variable."
   :group 'frame-bufs
   :type 'boolean)
 
+; Experimental.
 (defcustom frame-bufs-assoc-rules nil
   ""
   :group 'frame-bufs
@@ -357,14 +358,9 @@ use of the variable `frame-bufs--global-list'."
     "Keymap for `frame-bufs-mode'.  
 See the documentation of that command for details.")
 
-;; We use Buffer-menu-mode-hook to set frame-bufs-mode-map as the the local
-;; keymap in the buffer menu, so make sure it includes all the
-;; Buffer-menu-mode-map bindings.
 (set-keymap-parent frame-bufs-mode-map Buffer-menu-mode-map)
 
 (defvar frame-bufs-mode-line-keymap
-  ;; Set up a keymap so that clicking on our mode line information toggles
-  ;; global/local mode.
   (let ((map (make-sparse-keymap)))
     (define-key map [mode-line mouse-1] 'frame-bufs-mode-line-toggle-global-list)
     map)
@@ -376,7 +372,6 @@ See the documentation of that command for details.")
 Do not set this variable directly.  Use the command
 `frame-bufs-mode' instead.")
 
-;; Make sure our info is available via `C-h m'.
 (add-to-list 'minor-mode-list 'frame-bufs-mode)
 
 (defun frame-bufs-mode (&optional arg) 
@@ -509,8 +504,8 @@ variables `frame-bufs-associated-buffer-bit', `frame-bufs-use-buffer-predicate',
   (unwind-protect
       (when (frame-live-p frame-bufs--new-frame)
         (when frame-bufs-include-new-buffers
-          (frame-bufs--add-buffers (frame-bufs--set-minus frame-bufs--prev-buffers 
-                                                        (buffer-list))
+          (frame-bufs--add-buffers (frame-bufs--set-diff (buffer-list) 
+                                                         frame-bufs--prev-buffers)
                                   frame-bufs--new-frame))
         (unless (or frame-bufs-include-init-buffer
                     (memq frame-bufs--init-buffer 
@@ -545,7 +540,7 @@ variables `frame-bufs-associated-buffer-bit', `frame-bufs-use-buffer-predicate',
                              nil)))))
 
 ;;; ---------------------------------------------------------------------
-;;; Associated-Buffer List Maintenance and Manipulation
+;;; Per-Frame Buffer List Maintenance and Manipulation
 ;;; ---------------------------------------------------------------------
 
 ;; Called by window-configuration-change-hook to update the associated-buffer
@@ -632,10 +627,12 @@ itself."
         (mapcar #'(lambda (x) (if (not (string-match "^ " (buffer-name x))) x))
                 bufs)))
 
-(defun frame-bufs--set-minus (subtrahend minuend)
-  (dolist (element subtrahend)
-    (setq minuend (delq element minuend)))
-  minuend)
+(defun frame-bufs--set-diff (minuend subtrahend)
+  (let ((res '()))
+    (dolist (e minuend)
+      (unless (memq e subtrahend)
+        (push e res)))
+    (reverse res)))
 
 (defun frame-bufs--ok-to-display-p (buf)
   (let ((other-pred (frame-parameter nil 'frame-bufs-saved-buffer-pred)))
