@@ -450,19 +450,10 @@ variables `frame-bufs-associated-buffer-bit', `frame-bufs-use-buffer-predicate',
       (ad-activate fn))
     (dolist (hook frame-bufs--hook-assignments)
       (remove-hook (car hook) (cdr hook)))
-    ;; Again, in case we toggle the mode while the buffer menu exists, but
-    ;; this time with a hack to make sure Buffer-menu-revert-function finds
-    ;; the right buffer despite the change in Buffer-menu-buffer-column.
+    ;; Again, in case we toggle the mode while the buffer menu exists.
     (let ((buf (get-buffer "*Buffer List*")))
       (when buf
         (with-current-buffer buf
-          (unless (eobp)
-            (let ((buffer-read-only nil)
-                  (pos (+ (line-beginning-position) 4)))
-              (put-text-property pos 
-                                 (1+ pos)
-                                 'buffer
-                                 (get-text-property (1+ pos) 'buffer))))
           (revert-buffer)
           (frame-bufs--unload-from-buff-menu))))
     (run-hooks 'frame-bufs-mode-off-hook)
