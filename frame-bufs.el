@@ -626,14 +626,13 @@ itself."
     (dolist (e minuend)
       (unless (memq e subtrahend)
         (push e res)))
-    (reverse res)))
+    (nreverse res)))
 
 (defun frame-bufs--ok-to-display-p (buf)
   (let ((other-pred (frame-parameter nil 'frame-bufs-saved-buffer-pred)))
     (and (frame-bufs--associated-p buf)
-         (if (functionp other-pred)
-             (funcall other-pred buf)
-           t))))
+         (or (not (functionp other-pred)
+                  (funcall other-pred buf))))))
 
 (defun frame-bufs--associated-p (buf &optional frame)
   (memq buf (frame-parameter frame 'frame-bufs-buffer-list)))
