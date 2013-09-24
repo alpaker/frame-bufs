@@ -773,9 +773,6 @@ Optional ARG means move up."
   (tabulated-list-set-col 0 " " t)
   (let ((buf (Buffer-menu-buffer)))
     (when buf
-      (if (with-current-buffer buf buffer-read-only)
-          (tabulated-list-set-col 1 "%" t)
-        (tabulated-list-set-col 1 " " t))
       (if (buffer-modified-p buf)
           (tabulated-list-set-col 2 "*" t)
         (tabulated-list-set-col 2 " " t))
