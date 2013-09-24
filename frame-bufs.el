@@ -3,7 +3,7 @@
 ;; Copyright (c) 2011-2013 Alp Aker
 
 ;; Author: Alp Aker <alp.tekin.aker@gmail.com>
-;; Version: 2.03
+;; Version: 2.04
 ;; Keywords: convenience, buffers
 
 ;; This program is free software; you can redistribute it and/or
