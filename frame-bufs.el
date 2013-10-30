@@ -631,8 +631,8 @@ itself."
 (defun frame-bufs--ok-to-display-p (buf)
   (let ((other-pred (frame-parameter nil 'frame-bufs-saved-buffer-pred)))
     (and (frame-bufs--associated-p buf)
-         (or (not (functionp other-pred)
-                  (funcall other-pred buf))))))
+         (or (not (functionp other-pred))
+                  (funcall other-pred buf)))))
 
 (defun frame-bufs--associated-p (buf &optional frame)
   (memq buf (frame-parameter frame 'frame-bufs-buffer-list)))
