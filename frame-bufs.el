@@ -834,20 +834,20 @@ Optional ARG means move up."
     (if Buffer-menu-buffer+size-width
         (setq name-width (- Buffer-menu-buffer+size-width size-width)))
     (setq tabulated-list-format
-          (let* ((bits `(("C" 1 t :pad-right 0)
-                         ("R" 1 t :pad-right 0)
-                         ,(if frame-bufs-mode
-                              '("M" 1 t :pad-right 0)
-                            '("M" 1 t))))
-                 (fb-bit (if frame-bufs-mode
-                             (if frame-bufs--global-list
-                                 '(("F"  1 t))
-                               '(("-"  1 t)))))
-                 (tail `(("Buffer" ,name-width t)
-                         ("Size" ,size-width tabulated-list-entry-size->
-                          :right-align t)
-                         ("Mode" ,Buffer-menu-mode-width t)
-                         ("File" 1 t))))
+          (let ((bits `(("C" 1 t :pad-right 0)
+                        ("R" 1 t :pad-right 0)
+                        ,(if frame-bufs-mode
+                             '("M" 1 t :pad-right 0)
+                           '("M" 1 t))))
+                (fb-bit (if frame-bufs-mode
+                            (if frame-bufs--global-list
+                                '(("F"  1 t))
+                              '(("-"  1 t)))))
+                (tail `(("Buffer" ,name-width t)
+                        ("Size" ,size-width tabulated-list-entry-size->
+                         :right-align t)
+                        ("Mode" ,Buffer-menu-mode-width t)
+                        ("File" 1 t))))
             (apply 'vector (append bits fb-bit tail)))))
   (setq tabulated-list-use-header-line Buffer-menu-use-header-line)
   ;; Collect info for each buffer we're interested in.
@@ -868,18 +868,18 @@ Optional ARG means move up."
                               (not (eq buffer buffer-menu-buffer))
                               (or file show-non-file))))
             (push (list buffer
-                        (let* ((bits (list (if (eq buffer old-buffer) "." " ")
-                                           (if buffer-read-only "%" " ")
-                                           (if (buffer-modified-p) "*" " ")))
-                               (fb-bit (if frame-bufs-mode
-                                           (list (frame-bufs--bit-info buffer))))
-                               (tail (list (Buffer-menu--pretty-name name)
-                                           (number-to-string (buffer-size))
-                                           (concat (format-mode-line mode-name nil nil buffer)
-                                                   (if mode-line-process
-                                                       (format-mode-line mode-line-process
-                                                                         nil nil buffer)))
-                                           (Buffer-menu--pretty-file-name file))))
+                        (let ((bits (list (if (eq buffer old-buffer) "." " ")
+                                          (if buffer-read-only "%" " ")
+                                          (if (buffer-modified-p) "*" " ")))
+                              (fb-bit (if frame-bufs-mode
+                                          (list (frame-bufs--bit-info buffer))))
+                              (tail (list (Buffer-menu--pretty-name name)
+                                          (number-to-string (buffer-size))
+                                          (concat (format-mode-line mode-name nil nil buffer)
+                                                  (if mode-line-process
+                                                      (format-mode-line mode-line-process
+                                                                        nil nil buffer)))
+                                          (Buffer-menu--pretty-file-name file))))
                           (apply 'vector (append bits fb-bit tail))))
                   entries)))))
     (setq tabulated-list-entries (nreverse entries)))
