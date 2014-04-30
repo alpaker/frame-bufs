@@ -181,7 +181,7 @@
 ;;; Code:
 
 (when (< emacs-major-version 24)
-  (error "Frame-Bufs requires version 22 or later"))
+  (error "Frame-Bufs requires version 24 or later"))
 
 ;;; ---------------------------------------------------------------------
 ;;; User Options
