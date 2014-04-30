@@ -535,7 +535,7 @@ variables `frame-bufs-associated-buffer-bit', `frame-bufs-use-buffer-predicate',
 ;;; ---------------------------------------------------------------------
 
 (defadvice select-window (after frame-bufs)
-  (frame-bufs--add-buffer (window-buffer) (window-frame)))
+  (frame-bufs--add-buffer (window-buffer) (window-frame nil)))
 
 ;; Called by window-configuration-change-hook to update the associated-buffer
 ;; list.
