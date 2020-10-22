@@ -1,3 +1,6 @@
+_This package is no longer maintained. Similar functionality is provided by
+`frame-purpose`, available in MELPA._
+
 `frame-bufs` extends Emacs’s buffer menu so that it understands a distinction between
 those buffers that "belong" to a frame and those that do not. The buffer menu
 can be toggled between listing all buffers and listing only those buffers
